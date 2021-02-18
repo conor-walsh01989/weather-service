@@ -1,4 +1,4 @@
-package com.conorwalsh.weatherservice.utilities;
+package com.conorwalsh.weatherservice.converters;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,9 +13,10 @@ import org.modelmapper.ModelMapper;
 import com.conorwalsh.weatherservice.client.response.Coordinates;
 import com.conorwalsh.weatherservice.client.response.CurrentWeatherResponse;
 import com.conorwalsh.weatherservice.client.response.Weather;
+import com.conorwalsh.weatherservice.converters.WeatherDtoConverter;
 import com.conorwalsh.weatherservice.model.dto.WeatherDto;
 
-class DtoMapperTest {
+class WeatherDtoConverterTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -44,7 +45,7 @@ class DtoMapperTest {
 	
 		//When - Source object is mapped to target
 		ModelMapper mapper = new ModelMapper();
-		mapper.addConverter(new DtoMapper());
+		mapper.addConverter(new WeatherDtoConverter());
 		WeatherDto weather = mapper.map(sampleResponse, WeatherDto.class);
 	
 		//Then - Properties are as expected

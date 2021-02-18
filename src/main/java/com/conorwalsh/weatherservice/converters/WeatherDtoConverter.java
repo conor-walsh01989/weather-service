@@ -1,4 +1,4 @@
-package com.conorwalsh.weatherservice.utilities;
+package com.conorwalsh.weatherservice.converters;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import com.conorwalsh.weatherservice.model.dto.WeatherDetailDto;
 import com.conorwalsh.weatherservice.model.dto.WeatherDto;
 import com.conorwalsh.weatherservice.model.dto.WindDto;
 
-public class DtoMapper implements Converter<CurrentWeatherResponse, WeatherDto> {
+public class WeatherDtoConverter implements Converter<CurrentWeatherResponse, WeatherDto> {
 
 	@Override
 	public WeatherDto convert(MappingContext<CurrentWeatherResponse, WeatherDto> context) {
