@@ -59,12 +59,9 @@ public class WeatherServiceApplication {
 					windDto.setSpeed(currentWeatherResponse.getWind().getSpeed());
 					weatherDto.setWindDetail(windDto);
 				}
-				System.out.println("OUTSIDE CHECK");
 				if (currentWeatherResponse.getWeather() != null) {
-					System.out.println("INSIDE CHECK");
 					List<WeatherDescriptionDto> weatherDescriptionList = new ArrayList<WeatherDescriptionDto>();
 					for (Weather desc : currentWeatherResponse.getWeather()) {
-						System.out.println("1");
 						WeatherDescriptionDto weatherDescription = new WeatherDescriptionDto();
 						weatherDescription.setMain(desc.getMain());
 						weatherDescription.setDescription(desc.getDescription());
