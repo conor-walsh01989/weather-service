@@ -1,0 +1,43 @@
+{
+    "coord": {
+        "lon": -9.0489,
+        "lat": 53.2719
+    },
+    "weather": [
+        {
+            "id": 803,
+            "main": "Clouds",
+            "description": "broken clouds",
+            "icon": "04d"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 281.06,
+        "feels_like": 273.79,
+        "temp_min": 280.93,
+        "temp_max": 281.15,
+        "pressure": 998,
+        "humidity": 71
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 8.23,
+        "deg": 250
+    },
+    "clouds": {
+        "all": 75
+    },
+    "dt": 1613660145,
+    "sys": {
+        "type": 1,
+        "id": 1569,
+        "country": "IE",
+        "sunrise": 1613634478,
+        "sunset": 1613670754
+    },
+    "timezone": 0,
+    "id": 2964180,
+    "name": "Galway",
+    "cod": 200
+}
