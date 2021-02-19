@@ -7,7 +7,9 @@ import org.modelmapper.Converter;
 import org.modelmapper.spi.MappingContext;
 
 import com.conorwalsh.weatherservice.client.response.CurrentWeatherResponse;
+import com.conorwalsh.weatherservice.client.response.MainData;
 import com.conorwalsh.weatherservice.client.response.Weather;
+import com.conorwalsh.weatherservice.client.response.Wind;
 import com.conorwalsh.weatherservice.model.dto.WeatherDescriptionDto;
 import com.conorwalsh.weatherservice.model.dto.WeatherDetailDto;
 import com.conorwalsh.weatherservice.model.dto.WeatherDto;
@@ -15,6 +17,9 @@ import com.conorwalsh.weatherservice.model.dto.WindDto;
 
 public class WeatherDtoConverter implements Converter<CurrentWeatherResponse, WeatherDto> {
 
+	/**
+	 * Converts public API response to simplified dto
+	 */
 	@Override
 	public WeatherDto convert(MappingContext<CurrentWeatherResponse, WeatherDto> context) {
 		CurrentWeatherResponse currentWeatherResponse = context.getSource();
@@ -28,33 +33,52 @@ public class WeatherDtoConverter implements Converter<CurrentWeatherResponse, We
 			weatherDto.setLatitude(currentWeatherResponse.getCoord().getLat());
 		}
 		weatherDto.setVisibility(currentWeatherResponse.getVisibility());
-
+		weatherDto.setWeatherDetail(buildWeatherDetailDtoFromMainDetail(currentWeatherResponse.getMain()));
+		weatherDto.setWindDetail(buildWindDtoFromWind(currentWeatherResponse.getWind()));
+		weatherDto.setWeatherDescription(buildWeatherDescriptionDtoListFromWeatherList(currentWeatherResponse.getWeather()));
+		return weatherDto;
+	}
+	
+	/**
+	 * Creates detail Dto from returned data from public API
+	 */
+	private WeatherDetailDto buildWeatherDetailDtoFromMainDetail(MainData mainDetail) {
 		WeatherDetailDto detail = new WeatherDetailDto();
-		if (currentWeatherResponse.getMain() != null) {
-			detail.setHumidity(currentWeatherResponse.getMain().getHumidity());
-			detail.setPressure(currentWeatherResponse.getMain().getPressure());
-			detail.setTemperature(currentWeatherResponse.getMain().getTemp());
-			detail.setTemperatureMax(currentWeatherResponse.getMain().getTemp_max());
-			detail.setTemperatureMin(currentWeatherResponse.getMain().getTemp_min());
-			weatherDto.setWeatherDetail(detail);
+		if (mainDetail != null) {
+			detail.setHumidity(mainDetail.getHumidity());
+			detail.setPressure(mainDetail.getPressure());
+			detail.setTemperature(mainDetail.getTemp());
+			detail.setTemperatureMax(mainDetail.getTemp_max());
+			detail.setTemperatureMin(mainDetail.getTemp_min());
 		}
-
-		if (currentWeatherResponse.getWind() != null) {
-			WindDto windDto = new WindDto();
-			windDto.setDegree(currentWeatherResponse.getWind().getDeg());
-			windDto.setSpeed(currentWeatherResponse.getWind().getSpeed());
-			weatherDto.setWindDetail(windDto);
+		return detail;
+	}
+	
+	/**
+	 * Creates wind Dto from returned data from public API
+	 */
+	private WindDto buildWindDtoFromWind(Wind wind) {
+		WindDto windDto = new WindDto();
+		if (wind != null) {
+			windDto.setDegree(wind.getDeg());
+			windDto.setSpeed(wind.getSpeed());
 		}
-		if (currentWeatherResponse.getWeather() != null) {
-			List<WeatherDescriptionDto> weatherDescriptionList = new ArrayList<WeatherDescriptionDto>();
-			for (Weather desc : currentWeatherResponse.getWeather()) {
+		return windDto;
+	}
+	
+	/**
+	 * Creates description list Dto from returned data from public API
+	 */
+	private List<WeatherDescriptionDto> buildWeatherDescriptionDtoListFromWeatherList(List<Weather> weatherList){
+		List<WeatherDescriptionDto> weatherDescriptionList = new ArrayList<WeatherDescriptionDto>();
+		if (weatherList != null) {	
+			for (Weather desc : weatherList) {
 				WeatherDescriptionDto weatherDescription = new WeatherDescriptionDto();
 				weatherDescription.setMain(desc.getMain());
 				weatherDescription.setDescription(desc.getDescription());
 				weatherDescriptionList.add(weatherDescription);
 			}
-			weatherDto.setWeatherDescription(weatherDescriptionList);
 		}
-		return weatherDto;
+		return weatherDescriptionList;
 	}
 }

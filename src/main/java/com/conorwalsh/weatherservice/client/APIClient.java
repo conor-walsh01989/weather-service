@@ -6,6 +6,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.conorwalsh.weatherservice.client.response.CurrentWeatherResponse;
 
+/**
+ * APICLient class contains actions used to interact with public API
+ */
 public class APIClient {
 
 	private String apiKey;
@@ -18,6 +21,9 @@ public class APIClient {
 		this.apiKey = apiKey;
 	}
 
+	/**
+	 * Call public API with a city to search for the current weather in that city
+	 */
 	public CurrentWeatherResponse getCurrentWeatherForCity(String city) {
 		UriComponents builder = UriComponentsBuilder.fromHttpUrl(baseUrl + "/weather").queryParam("q", city)
 				.queryParam("appid", apiKey).build();

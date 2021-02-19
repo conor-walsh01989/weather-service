@@ -1,12 +1,7 @@
 package com.conorwalsh.weatherservice.excpetionhandling;
 
-import org.springframework.cglib.core.CollectionUtils;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -30,11 +25,8 @@ import org.slf4j.LoggerFactory;
 @ControllerAdvice
 public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
 
-	public static final String ACCESS_DENIED = "Access denied!";
-	public static final String INVALID_REQUEST = "Invalid request";
 	public static final String ERROR_MESSAGE_TEMPLATE = "message: %s %n requested uri: %s";
 	public static final String LIST_JOIN_DELIMITER = ",";
-	public static final String FIELD_ERROR_SEPARATOR = ": ";
 	private static final Logger local_logger = LoggerFactory.getLogger(GeneralExceptionHandler.class);
 	private static final String ERRORS_FOR_PATH = "errors {} for path {}";
 	private static final String PATH = "path";
@@ -45,19 +37,31 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
 	private static final String TYPE = "type";
 
 	
+	/**
+	 * A general handler for all HTTPClientError exceptions
+	 */
+	@ExceptionHandler({HttpClientErrorException.class})
+	public ResponseEntity<Object> handleAllExceptions(HttpClientErrorException exception, WebRequest request) {
+		final HttpStatus status = exception!=null ? exception.getStatusCode():HttpStatus.INTERNAL_SERVER_ERROR;
+		final String localizedMessage = exception.getLocalizedMessage();
+		final String path = request.getDescription(false);
+		String message = (!localizedMessage.isEmpty() ? localizedMessage:status.getReasonPhrase());
+		logger.error(String.format(ERROR_MESSAGE_TEMPLATE, message, path), exception);
+		return getExceptionResponseEntity(exception, status, request, Collections.singletonList(message));
+	}
+
 	
 	/**
 	 * A general handler for all uncaught exceptions
 	 */
 	@ExceptionHandler({Exception.class})
 	public ResponseEntity<Object> handleAllExceptions(Exception exception, WebRequest request) {
-		ResponseStatus responseStatus =
-				exception.getClass().getAnnotation(ResponseStatus.class);
-		final HttpStatus status =
-				responseStatus!=null ? responseStatus.value():HttpStatus.INTERNAL_SERVER_ERROR;
+		System.out.println("other cATCH");
+		ResponseStatus responseStatus = exception.getClass().getAnnotation(ResponseStatus.class);
+		final HttpStatus status = responseStatus!=null ? responseStatus.value():HttpStatus.INTERNAL_SERVER_ERROR;
 		final String localizedMessage = exception.getLocalizedMessage();
 		final String path = request.getDescription(false);
-		String message = (!localizedMessage.isEmpty() ? localizedMessage:status.getReasonPhrase());
+		String message = ((localizedMessage!=null && !localizedMessage.isEmpty()) ? localizedMessage:status.getReasonPhrase());
 		logger.error(String.format(ERROR_MESSAGE_TEMPLATE, message, path), exception);
 		return getExceptionResponseEntity(exception, status, request, Collections.singletonList(message));
 	}
@@ -76,7 +80,7 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
 		body.put(ERRORS, errors);
 		body.put(TYPE, exception.getClass().getSimpleName());
 		body.put(PATH, path);
-		body.put(MESSAGE, getMessageForStatus(status));
+		body.put(MESSAGE, status.getReasonPhrase());
 		final String errorsMessage = (errors != null && errors.size()>0) ?
 				errors.stream().collect(Collectors.joining(LIST_JOIN_DELIMITER))
 				:status.getReasonPhrase();
@@ -84,35 +88,5 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(body, status);
 	}
 
-	private String getMessageForStatus(HttpStatus status) {
-		switch (status) {
-			case BAD_REQUEST:
-				return INVALID_REQUEST;
-			default:
-				return status.getReasonPhrase();
-		}
-	}
-	
-	/**
-	 * Build a detailed information about the exception in the response
-	 */
-	private ResponseEntity<Object> getUpstreamExceptionResponseEntity(final Exception exception,
-								  final HttpStatus status,
-								  final WebRequest request,
-								  final List<String> errors) {
-		final Map<String, Object> body = new LinkedHashMap<>();
-		final String path = request.getDescription(false);
-		body.put(TIMESTAMP, Instant.now());
-		body.put(STATUS, status.value());
-		body.put(ERRORS, errors);
-		body.put(TYPE, exception.getClass().getSimpleName());
-		body.put(PATH, path);
-		body.put(MESSAGE, UPSTREAM_SERVICE_ERROR);
-		final String errorsMessage = (errors != null && errors.size()>0) ?
-				errors.stream().collect(Collectors.joining(LIST_JOIN_DELIMITER))
-				:status.getReasonPhrase();
-		local_logger.error(ERRORS_FOR_PATH, errorsMessage, path);
-		return new ResponseEntity<>(body, status);
-	}
 	
 }

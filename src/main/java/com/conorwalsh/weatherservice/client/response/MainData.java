@@ -1,5 +1,8 @@
 package com.conorwalsh.weatherservice.client.response;
 
+/**
+ * MainData class used to store temperature information found in the response from the public API
+ */
 public class MainData {
 
 	private double temp;

@@ -1,5 +1,8 @@
 package com.conorwalsh.weatherservice.client.response;
 
+/**
+ * Coordinates class used to store coordinate information found in the response from the public API
+ */
 public class Coordinates {
 	
 	private double lon;

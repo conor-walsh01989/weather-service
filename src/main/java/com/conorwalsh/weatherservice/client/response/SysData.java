@@ -1,5 +1,8 @@
 package com.conorwalsh.weatherservice.client.response;
 
+/**
+ * SysData class used to store information found in the response from the public API
+ */
 public class SysData {
 
 	private int type;

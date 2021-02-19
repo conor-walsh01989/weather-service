@@ -1,7 +1,5 @@
 package com.conorwalsh.weatherservice.converters;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +11,6 @@ import org.modelmapper.ModelMapper;
 import com.conorwalsh.weatherservice.client.response.Coordinates;
 import com.conorwalsh.weatherservice.client.response.CurrentWeatherResponse;
 import com.conorwalsh.weatherservice.client.response.Weather;
-import com.conorwalsh.weatherservice.converters.WeatherDtoConverter;
 import com.conorwalsh.weatherservice.model.dto.WeatherDto;
 
 class WeatherDtoConverterTest {

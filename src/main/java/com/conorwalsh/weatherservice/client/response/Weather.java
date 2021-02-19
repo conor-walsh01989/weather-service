@@ -1,5 +1,8 @@
 package com.conorwalsh.weatherservice.client.response;
 
+/**
+ * Weather class used to store descriptive weather information found in the response from the public API
+ */
 public class Weather {
 
 	private int id;

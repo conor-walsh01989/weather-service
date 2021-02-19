@@ -2,6 +2,9 @@ package com.conorwalsh.weatherservice.client.response;
 
 import java.util.List;
 
+/**
+ * CurrentWeatherResponse class used to hold the overall state of the response from the public API
+ */
 public class CurrentWeatherResponse {
 
 	private Coordinates coord;
