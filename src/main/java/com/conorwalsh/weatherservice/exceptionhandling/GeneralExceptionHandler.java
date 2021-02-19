@@ -1,4 +1,4 @@
-package com.conorwalsh.weatherservice.excpetionhandling;
+package com.conorwalsh.weatherservice.exceptionhandling;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
