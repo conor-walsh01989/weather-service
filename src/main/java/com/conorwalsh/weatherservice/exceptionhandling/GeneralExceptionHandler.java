@@ -56,7 +56,6 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
 	 */
 	@ExceptionHandler({Exception.class})
 	public ResponseEntity<Object> handleAllExceptions(Exception exception, WebRequest request) {
-		System.out.println("other cATCH");
 		ResponseStatus responseStatus = exception.getClass().getAnnotation(ResponseStatus.class);
 		final HttpStatus status = responseStatus!=null ? responseStatus.value():HttpStatus.INTERNAL_SERVER_ERROR;
 		final String localizedMessage = exception.getLocalizedMessage();

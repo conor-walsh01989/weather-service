@@ -20,6 +20,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import com.conorwalsh.weatherservice.model.dto.WeatherDto;
 import com.conorwalsh.weatherservice.service.WeatherService;
+import com.conorwalsh.weatherservice.test.utilities.TestUtils;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(WeatherServiceController.class)
@@ -54,8 +55,9 @@ class WeatherServiceControllerTest {
 		MvcResult result = actions.andReturn();
 		int status = result.getResponse().getStatus();
 		assert 200 == status;
-		String content = result.getResponse().getContentAsString();
-		System.out.println("content = " + content);	
+		WeatherDto responseWeatherDto = TestUtils.createObjectFromJsonString(result.getResponse().getContentAsString(), WeatherDto.class);
+		assert responseWeatherDto.getCityName().equals("New York");
+		assert responseWeatherDto.getCountry().equals("USA");
 	}
 	
 	/**
@@ -63,7 +65,6 @@ class WeatherServiceControllerTest {
 	 */
 	@Test
 	public void testGetWeatherForCityWithNoParamater() throws Exception {
-		new HttpClientErrorException(HttpStatus.BAD_REQUEST);
 		HttpClientErrorException badRequestException = HttpClientErrorException.create(HttpStatus.BAD_REQUEST, "Bad Request", null, null, null);
 		given(weatherService.findWeatherForCity("")).willThrow(badRequestException);
 		ResultActions actions = mvc
@@ -79,7 +80,6 @@ class WeatherServiceControllerTest {
 	 */
 	@Test
 	public void testGetWeatherForCityWithNotFound() throws Exception {
-		new HttpClientErrorException(HttpStatus.BAD_REQUEST);
 		HttpClientErrorException notFoundException = HttpClientErrorException.create(HttpStatus.NOT_FOUND, "NOT_FOUND", null, null, null);
 		given(weatherService.findWeatherForCity("New York")).willThrow(notFoundException);
 		ResultActions actions = mvc
@@ -95,7 +95,6 @@ class WeatherServiceControllerTest {
 	 */
 	@Test
 	public void testGetWeatherForCityWithUnexpectedException() throws Exception {
-		new HttpClientErrorException(HttpStatus.BAD_REQUEST);
 		NullPointerException nullPointerException = new NullPointerException();
 		given(weatherService.findWeatherForCity("New York")).willThrow(nullPointerException);
 		ResultActions actions = mvc
