@@ -26,6 +26,9 @@ public class WeatherServiceController {
 	@Autowired
 	private WeatherService weatherService;
 
+	/** 
+	 * REST action for city based searches
+	 */
 	@RequestMapping(path = "/city", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public WeatherDto findWeatherForCity(@RequestParam(name = "city", required = true) String city,
 			@RequestParam(name = "stateCode", required = false) String stateCode,
@@ -33,7 +36,7 @@ public class WeatherServiceController {
 		logger.debug("City request received with paramater(s): city:" + city + " ,stateCode:" + stateCode
 				+ " countryCode:" + countryCode);
 		WeatherDto weatherDto = null;
-		// Call the right method based on supplied parameters
+		// Call the correct method based on supplied parameters
 		if (StringUtils.isPopulated(city) && StringUtils.isPopulated(stateCode)
 				&& StringUtils.isPopulated(countryCode)) {
 			weatherDto = weatherService.findWeatherForCityAndStateCodeAndCountryCode(city, stateCode, countryCode);
@@ -47,6 +50,9 @@ public class WeatherServiceController {
 		return weatherDto;
 	}
 
+	/** 
+	 * REST action for coordinate based searches
+	 */
 	@RequestMapping(path = "/location", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public WeatherDto findWeatherForLatLong(@RequestParam(name = "lat", required = true) double lat,
 			@RequestParam(name = "long", required = true) double lon) {
@@ -54,12 +60,16 @@ public class WeatherServiceController {
 		return weatherService.findWeatherByLatLong(lat, lon);
 	}
 
+	/** 
+	 * REST action for zipcode based searches
+	 */
 	@RequestMapping(path = "/zipCode", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public WeatherDto findWeatherForLatLong(@RequestParam(name = "zipCode", required = true) String zipCode,
 			@RequestParam(name = "countryCode", required = false) String countryCode) {
 		logger.debug(
 				"Location request received with paramater(s): zipCode:" + zipCode + " ,countryCode:" + countryCode);
 		WeatherDto weatherDto = null;
+		// Call the correct method based on supplied parameters
 		if (StringUtils.isPopulated(zipCode) && StringUtils.isPopulated(countryCode)) {
 			weatherDto = weatherService.findWeatherByZipCodeAndCountryCode(zipCode, countryCode);
 		} else {
