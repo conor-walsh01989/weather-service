@@ -1,0 +1,437 @@
+{
+	"info": {
+		"_postman_id": "5fea3162-ede5-4d3d-8e65-03ae56587c94",
+		"name": "weather-tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/api/v1/weather/city?city=New York",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Verify response values\", function () { \r",
+							"    var jsonData = pm.response.json()\r",
+							"    pm.expect(jsonData.cityName).is.to.equal(\"New York\"); \r",
+							"    pm.expect(jsonData.country).is.to.equal(\"US\"); \r",
+							"    pm.expect(jsonData.latitude).is.to.equal(40.7143); \r",
+							"    pm.expect(jsonData.longitude).is.to.equal(-74.006); \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/weather/city?city=New York",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"weather",
+						"city"
+					],
+					"query": [
+						{
+							"key": "city",
+							"value": "New York"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/v1/weather/city?city=Malibu&stateCode=CA&countryCode=US",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Verify response values\", function () { \r",
+							"    var jsonData = pm.response.json()\r",
+							"    pm.expect(jsonData.cityName).is.to.equal(\"Newark\"); \r",
+							"    pm.expect(jsonData.country).is.to.equal(\"US\"); \r",
+							"    pm.expect(jsonData.latitude).is.to.equal(40.7357); \r",
+							"    pm.expect(jsonData.longitude).is.to.equal(-74.1724); \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/weather/city?city=Newark&stateCode=NJ&countryCode=US",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"weather",
+						"city"
+					],
+					"query": [
+						{
+							"key": "city",
+							"value": "Newark"
+						},
+						{
+							"key": "stateCode",
+							"value": "NJ"
+						},
+						{
+							"key": "countryCode",
+							"value": "US"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/v1/weather/city?city=Malibu&stateCode=CA&countryCode=US",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Verify response values\", function () { \r",
+							"    var jsonData = pm.response.json()\r",
+							"    pm.expect(jsonData.cityName).is.to.equal(\"Newark\"); \r",
+							"    pm.expect(jsonData.country).is.to.equal(\"US\"); \r",
+							"    pm.expect(jsonData.latitude).is.to.equal(40.7357); \r",
+							"    pm.expect(jsonData.longitude).is.to.equal(-74.1724); \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/weather/city?city=Newark&stateCode=NJ&countryCode=US",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"weather",
+						"city"
+					],
+					"query": [
+						{
+							"key": "city",
+							"value": "Newark"
+						},
+						{
+							"key": "stateCode",
+							"value": "NJ"
+						},
+						{
+							"key": "countryCode",
+							"value": "US"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/v1/weather/city?city=Birmingham&stateCode=UK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Verify response values\", function () { \r",
+							"    var jsonData = pm.response.json()\r",
+							"    pm.expect(jsonData.cityName).is.to.equal(\"Birmingham\"); \r",
+							"    pm.expect(jsonData.country).is.to.equal(\"UK\"); \r",
+							"    pm.expect(jsonData.latitude).is.to.equal(52.4814); \r",
+							"    pm.expect(jsonData.longitude).is.to.equal(-1.8998); \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/weather/city?city=Birmingham&stateCode=UK",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"weather",
+						"city"
+					],
+					"query": [
+						{
+							"key": "city",
+							"value": "Birmingham"
+						},
+						{
+							"key": "stateCode",
+							"value": "UK"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/v1/weather/location?lat=35&long=139",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Verify response values\", function () { \r",
+							"    var jsonData = pm.response.json()\r",
+							"    pm.expect(jsonData.cityName).is.to.equal(\"Shuzenji\"); \r",
+							"    pm.expect(jsonData.country).is.to.equal(\"JP\"); \r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/weather/location?lat=35&long=139",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"weather",
+						"location"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "35"
+						},
+						{
+							"key": "long",
+							"value": "139"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/v1/weather/zipCode?zipCode=85001",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Verify response values\", function () { \r",
+							"    var jsonData = pm.response.json()\r",
+							"    pm.expect(jsonData.cityName).is.to.equal(\"Phoenix\"); \r",
+							"    pm.expect(jsonData.country).is.to.equal(\"US\"); \r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/weather/zipCode?zipCode=85001",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"weather",
+						"zipCode"
+					],
+					"query": [
+						{
+							"key": "zipCode",
+							"value": "85001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/v1/weather/zipCode?zipCode=X91&countryCode=IE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Verify response values\", function () { \r",
+							"    var jsonData = pm.response.json()\r",
+							"    pm.expect(jsonData.cityName).is.to.equal(\"Waterford\"); \r",
+							"    pm.expect(jsonData.country).is.to.equal(\"IE\"); \r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/weather/zipCode?zipCode=X91&countryCode=IE",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"weather",
+						"zipCode"
+					],
+					"query": [
+						{
+							"key": "zipCode",
+							"value": "X91"
+						},
+						{
+							"key": "countryCode",
+							"value": "IE"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/v1/weather/city?city=",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/weather/city?city=",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"weather",
+						"city"
+					],
+					"query": [
+						{
+							"key": "city",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/v1/weather/cityddddd",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/weather/cityddddd",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"weather",
+						"cityddddd"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
