@@ -1,4 +1,4 @@
-package com.conorwalsh.weatherservice.test.utilities;
+package com.conorwalsh.weatherservice.test.utils;
 
 import java.io.IOException;
 

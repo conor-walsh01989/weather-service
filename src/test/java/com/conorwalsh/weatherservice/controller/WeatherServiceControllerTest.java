@@ -20,7 +20,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import com.conorwalsh.weatherservice.model.dto.WeatherDto;
 import com.conorwalsh.weatherservice.service.WeatherService;
-import com.conorwalsh.weatherservice.test.utilities.TestUtils;
+import com.conorwalsh.weatherservice.test.utils.TestUtils;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(WeatherServiceController.class)
@@ -47,7 +47,7 @@ class WeatherServiceControllerTest {
 	public void testGetWeatherForCity() throws Exception {
 		WeatherDto weatherDto = new WeatherDto();
 		weatherDto.setCityName("New York");
-		weatherDto.setCountry("USA");
+		weatherDto.setCountry("US");
 		given(weatherService.findWeatherForCity("New York")).willReturn(weatherDto);
 		ResultActions actions = mvc
 				.perform(get("/api/v1/weather/city?city=New York").contentType(MediaType.APPLICATION_JSON))
