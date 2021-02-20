@@ -25,7 +25,7 @@ public class WeatherServiceImpl implements WeatherService {
 	Logger logger = LoggerFactory.getLogger(WeatherServiceImpl.class);
 
 	/**
-	 * Autowired constructor. Uses defined properties to create apiClient object
+	 * Constructor. Uses defined properties to create apiClient object
 	 */
 	public WeatherServiceImpl(@Value("${weather.api.baseUrl}") String baseUrl, @Value("${weather.api.key}") String apiKey) {
 		apiClient = new APIClient(baseUrl, apiKey);

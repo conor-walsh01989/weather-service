@@ -1,7 +1,9 @@
 package com.conorwalsh.weatherservice.exceptionhandling;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -38,10 +40,23 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
 
 	
 	/**
+	 * Override superclass method to return greater detail
+	 */
+	@Override
+	protected ResponseEntity<Object> handleMissingServletRequestParameter(
+			MissingServletRequestParameterException exception, HttpHeaders headers, HttpStatus status, WebRequest request) {
+		    String name = exception.getParameterName();
+			final String path = request.getDescription(false);
+			String message = name + " parameter is missing";
+			logger.error(String.format(ERROR_MESSAGE_TEMPLATE, message, path), exception);
+			return getExceptionResponseEntity(exception, status, request, Collections.singletonList(message));
+	}
+	
+	/**
 	 * A general handler for all HTTPClientError exceptions
 	 */
 	@ExceptionHandler({HttpClientErrorException.class})
-	public ResponseEntity<Object> handleAllExceptions(HttpClientErrorException exception, WebRequest request) {
+	public ResponseEntity<Object> handleHttpClientExceptions(HttpClientErrorException exception, WebRequest request) {
 		final HttpStatus status = exception!=null ? exception.getStatusCode():HttpStatus.INTERNAL_SERVER_ERROR;
 		final String localizedMessage = exception.getLocalizedMessage();
 		final String path = request.getDescription(false);
@@ -49,8 +64,8 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
 		logger.error(String.format(ERROR_MESSAGE_TEMPLATE, message, path), exception);
 		return getExceptionResponseEntity(exception, status, request, Collections.singletonList(message));
 	}
-
 	
+
 	/**
 	 * A general handler for all uncaught exceptions
 	 */

@@ -26,7 +26,8 @@ public class WeatherServiceController {
 	private WeatherService weatherService;
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public WeatherDto findWeatherForCity(@RequestParam("city") String city) {
+	public WeatherDto findWeatherForCity(@RequestParam(name = "city",required=true) String city) {
+		logger.debug("Request received with paramater: "+city);
 		return weatherService.findWeatherForCity(city);
 	}
 	

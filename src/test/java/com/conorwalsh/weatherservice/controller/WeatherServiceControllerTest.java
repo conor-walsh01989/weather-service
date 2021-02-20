@@ -68,11 +68,12 @@ class WeatherServiceControllerTest {
 		HttpClientErrorException badRequestException = HttpClientErrorException.create(HttpStatus.BAD_REQUEST, "Bad Request", null, null, null);
 		given(weatherService.findWeatherForCity("")).willThrow(badRequestException);
 		ResultActions actions = mvc
-				.perform(get("/api/v1/weather?city=").contentType(MediaType.APPLICATION_JSON))
+				.perform(get("/api/v1/weather").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().is(400));
 		MvcResult result = actions.andReturn();
 		int status = result.getResponse().getStatus();
 		assert 400 == status;
+		assert result.getResponse().getContentAsString().contains("city parameter is missing");
 	}
 	
 	/**
