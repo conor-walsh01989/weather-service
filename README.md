@@ -5,9 +5,11 @@ The application uses the publicly available OpenWeather API available at https:/
 
 ## Running the Application
 Use the following command to run the weather-service application
+
 ``` mvn spring-boot:run ```
 ## Tests
 Use the following command to run the applications tests
+
 ``` mvn test ```
 ## Example Queries
 ### 1. Retrieve weather information using a City Name
