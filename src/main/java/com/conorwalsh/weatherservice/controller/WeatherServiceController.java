@@ -25,10 +25,24 @@ public class WeatherServiceController {
 	@Autowired
 	private WeatherService weatherService;
 
-	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public WeatherDto findWeatherForCity(@RequestParam(name = "city",required=true) String city) {
-		logger.debug("Request received with paramater: "+city);
+	@RequestMapping(path = "/city",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public WeatherDto findWeatherForCity(@RequestParam(name = "city", required = true) String city,
+			@RequestParam(name = "stateCode", required = false) String stateCode,
+			@RequestParam(name = "countryCode", required = false) String countryCode) {
+		logger.debug("City request received with paramater(s): city:"+city+ " ,stateCode:" + stateCode+" countryCode:"+countryCode);
 		return weatherService.findWeatherForCity(city);
+	}
+	
+	@RequestMapping(path = "/location",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public WeatherDto findWeatherForLatLong(@RequestParam(name = "lat", required = true) double lat, @RequestParam(name = "long", required = true)double lon) {
+		logger.debug("Location request received with paramater(s): lat:"+lat+ " ,lon:"+lon);
+		return weatherService.findWeatherByLatLong(lat, lon);
+	}
+	
+	@RequestMapping(path = "/zipCode",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public WeatherDto findWeatherForLatLong(@RequestParam(name = "zipCode", required = true) String zipCode, @RequestParam(name = "countryCode", required = false)String countryCode) {
+		logger.debug("Location request received with paramater(s): zipCode:"+zipCode+ " ,countryCode:"+countryCode);
+		return weatherService.findWeatherByZipCodeAndCountryCode(zipCode, countryCode);
 	}
 	
 

@@ -22,12 +22,56 @@ public class APIClient {
 	}
 
 	/**
-	 * Call public API with a city to search for the current weather in that city
+	 * Call public API with city parameters
 	 */
 	public CurrentWeatherResponse getCurrentWeatherForCity(String city) {
 		UriComponents builder = UriComponentsBuilder.fromHttpUrl(baseUrl + "/weather").queryParam("q", city)
 				.queryParam("appid", apiKey).build();
+		return performRequest(builder.toUriString());
+	}
+	
+	public CurrentWeatherResponse getCurrentWeatherForCityAndStateCode(String city, String stateCode) {
+		String q = city+","+stateCode;
+		UriComponents builder = UriComponentsBuilder.fromHttpUrl(baseUrl + "/weather").queryParam("q",  q)
+				.queryParam("appid", apiKey).build();
+		return performRequest(builder.toUriString());
+	}
+	
+	public CurrentWeatherResponse getWeatherForCityAndStateCodeAndCountryCode(String city, String stateCode, String countryCode) {
+		String q = city+","+stateCode+","+countryCode;
+		UriComponents builder = UriComponentsBuilder.fromHttpUrl(baseUrl + "/weather").queryParam("q",  q)
+				.queryParam("appid", apiKey).build();
+		return performRequest(builder.toUriString());
+	}
+
+	
+	/**
+	 * Call public API with coordinate parameters
+	 */
+	public CurrentWeatherResponse getCurrentWeatherForLatLong(double lat, double lon) {
+		UriComponents builder = UriComponentsBuilder.fromHttpUrl(baseUrl + "/weather").queryParam("lat", lat).queryParam("lon",lon)
+				.queryParam("appid", apiKey).build();
+		return performRequest(builder.toUriString());
+	}
+
+	/**
+	 * Call public API with zipCode parameters
+	 */
+	public CurrentWeatherResponse getCurrentWeatherForZipCode(String zipCode) {
+		UriComponents builder = UriComponentsBuilder.fromHttpUrl(baseUrl + "/weather").queryParam("zip", zipCode)
+				.queryParam("appid", apiKey).build();
 		return restTemplate.getForEntity(builder.toUriString(), CurrentWeatherResponse.class).getBody();
+	}
+	
+	public CurrentWeatherResponse getCurrentWeatherForZipCodeAndCountryCode(String zipCode, String countryCode) {
+		String q = zipCode+","+countryCode;
+		UriComponents builder = UriComponentsBuilder.fromHttpUrl(baseUrl + "/weather").queryParam("zip", q)
+				.queryParam("appid", apiKey).build();
+		return performRequest(builder.toUriString());
+	}
+	
+	private CurrentWeatherResponse performRequest(String uri) {
+		return restTemplate.getForEntity(uri, CurrentWeatherResponse.class).getBody();
 	}
 
 }

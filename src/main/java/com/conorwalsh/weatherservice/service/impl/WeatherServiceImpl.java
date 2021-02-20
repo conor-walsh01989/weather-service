@@ -39,4 +39,33 @@ public class WeatherServiceImpl implements WeatherService {
 		return modelMapper.map(apiClient.getCurrentWeatherForCity(city), WeatherDto.class);
 	}
 
+
+	@Override
+	public WeatherDto findWeatherForCityAndStateCode(String city, String stateCode) {
+		return modelMapper.map(apiClient.getCurrentWeatherForCityAndStateCode(city, stateCode), WeatherDto.class);
+	}
+
+	@Override
+	public WeatherDto findWeatherForCityAndStateCodeAndCountryCode(String city, String stateCode, String countryCode) {
+		return modelMapper.map(apiClient.getWeatherForCityAndStateCodeAndCountryCode(city, stateCode, countryCode), WeatherDto.class);
+	}
+	
+	
+	@Override
+	public WeatherDto findWeatherByLatLong(double lat, double lon) {
+		return modelMapper.map(apiClient.getCurrentWeatherForLatLong(lat,lon), WeatherDto.class);
+	}
+
+
+	@Override
+	public WeatherDto findWeatherByZipCode(String zipCode) {
+		return modelMapper.map(apiClient.getCurrentWeatherForZipCode(zipCode), WeatherDto.class);
+	}
+
+	@Override
+	public WeatherDto findWeatherByZipCodeAndCountryCode(String zipCode, String countryCode) {
+		return modelMapper.map(apiClient.getCurrentWeatherForZipCodeAndCountryCode(zipCode,countryCode), WeatherDto.class);
+	}
+
+	
 }
