@@ -14,9 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-/**
- * Rest interface of the application
- */
 @RestController
 @RequestMapping(path = { "/api/v1/weather" }, produces = MediaType.APPLICATION_JSON_VALUE)
 public class WeatherServiceController {
@@ -26,7 +23,7 @@ public class WeatherServiceController {
 	@Autowired
 	private WeatherService weatherService;
 
-	/** 
+	/**
 	 * REST action for city based searches
 	 */
 	@RequestMapping(path = "/city", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -37,20 +34,17 @@ public class WeatherServiceController {
 				+ " countryCode:" + countryCode);
 		WeatherDto weatherDto = null;
 		// Call the correct method based on supplied parameters
-		if (StringUtils.isPopulated(city) && StringUtils.isPopulated(stateCode)
-				&& StringUtils.isPopulated(countryCode)) {
+		if (StringUtils.isPopulated(city) && StringUtils.isPopulated(stateCode) && StringUtils.isPopulated(countryCode)) {
 			weatherDto = weatherService.findWeatherForCityAndStateCodeAndCountryCode(city, stateCode, countryCode);
 		} else if (StringUtils.isPopulated(city) && StringUtils.isPopulated(stateCode)) {
 			weatherDto = weatherService.findWeatherForCityAndStateCode(city, stateCode);
-		}
-		// City doesnt need to be checked as its marked as required=true
-		else {
+		} else {
 			weatherDto = weatherService.findWeatherForCity(city);
 		}
 		return weatherDto;
 	}
 
-	/** 
+	/**
 	 * REST action for coordinate based searches
 	 */
 	@RequestMapping(path = "/location", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -60,7 +54,7 @@ public class WeatherServiceController {
 		return weatherService.findWeatherByLatLong(lat, lon);
 	}
 
-	/** 
+	/**
 	 * REST action for zipcode based searches
 	 */
 	@RequestMapping(path = "/zipCode", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

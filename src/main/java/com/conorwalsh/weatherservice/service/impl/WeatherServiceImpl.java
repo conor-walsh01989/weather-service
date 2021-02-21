@@ -24,16 +24,10 @@ public class WeatherServiceImpl implements WeatherService {
 
 	Logger logger = LoggerFactory.getLogger(WeatherServiceImpl.class);
 
-	/**
-	 * Constructor. Uses defined properties to create apiClient object
-	 */
 	public WeatherServiceImpl(@Value("${weather.api.baseUrl}") String baseUrl, @Value("${weather.api.key}") String apiKey) {
 		apiClient = new APIClient(baseUrl, apiKey);
 	}
 	
-	/**
-	 * Uses api client to retrieve weather information from public API. Converts response to dto object
-	 */
 	@Override
 	public WeatherDto findWeatherForCity(String city) {
 		return modelMapper.map(apiClient.getCurrentWeatherForCity(city), WeatherDto.class);

@@ -7,9 +7,6 @@ import org.springframework.context.annotation.Bean;
 
 import com.conorwalsh.weatherservice.converters.WeatherDtoConverter;
 
-/**
- * Main application class used to launch the springboot application
- */
 @SpringBootApplication
 public class WeatherServiceApplication {
 
@@ -17,9 +14,6 @@ public class WeatherServiceApplication {
 		SpringApplication.run(WeatherServiceApplication.class, args);
 	}
 
-	/**
-	 * /Model mapper object. Purpose is to convert the object returned from public web service to simplified local dto object
-	 */
 	@Bean
 	public ModelMapper modelMapper() {
 		ModelMapper mapper = new ModelMapper();
